@@ -1,0 +1,193 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />
+
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/fieldset_extend.css" %}" />
+
+<script type="text/javascript" src="{% static "admin/js/jquery.js" %}"></script>
+
+<script type="text/javascript" src="{% static "admin/js/myprj/index.js" %}"></script>
+
+
+{% endblock %}
+
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div id="content-main">
+
+{% if app_list %}    
+    
+    {% for app in app_list %}
+
+    {% ifequal app.name "Rail" %}
+        <div class="module">        
+        <table>
+            <caption >
+                <a href="{{ app.app_url }}" 
+                   class="section" 
+                   title="{% blocktrans with name=app.name %}Models in the {{ name }} application{% endblocktrans %}">
+                    {% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}
+                </a>
+            </caption>
+
+                <tr id = "toggleshowhead" class = "toggleshowstypehead">
+                    <th scope="row" colspan = "2" id = "toggleshow"><a href="javascript:void(0)">View</a></th>
+                    <td>&nbsp;</td>
+                </tr>
+
+                {% for model in app.models %}
+                    {% for mymodel in rail_list %}
+                        {% if mymodel.lower == model.name.lower %} 
+        	                <tr id="{{ model.name }}" class = "menushowhide" >
+        		                {% include "admin/app_list.html" %}
+        	                </tr>
+        	            {% endif %}
+                    {% endfor %}
+                {% endfor %}
+
+                {% if user.is_superuser%}
+                {% comment %}
+                {% if user.is_superuser or user.is_staff %}
+                {% endcomment %}
+                    <tr id = "toggleshowhead2"  class = "toggleshowstypehead">
+                        <th scope="row" colspan = "2" id = "toggleshow2"><a href="javascript:void(0)">Product</a></th>
+                        <td>&nbsp;</td>
+                    </tr>
+                    
+                    {% for model in app.models %}
+                        {% for mymodel in product_list %}
+                            {% if mymodel.lower == model.name.lower %}
+            	                <tr id="{{ model.name }}" class = "menushowhide2" >
+            		                {% include "admin/app_list.html" %}
+            	                </tr>
+            	            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+
+                    <tr id = "toggleshowhead3"  class = "toggleshowstypehead">
+                        <th scope="row" colspan = "2" id = "toggleshow3"><a href="javascript:void(0)">Location</a></th>
+                        <td>&nbsp;</td>
+                    </tr>
+                    
+                    {% for model in app.models %}
+                        {% for mymodel in location_list %}
+                            {% if mymodel.lower == model.name.lower %}
+            	                <tr id="{{ model.name }}" class = "menushowhide3" >
+            		                {% include "admin/app_list.html" %}
+            	                </tr>
+            	            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+
+                    <tr id = "toggleshowhead4"  class = "toggleshowstypehead">
+                        <th scope="row" colspan = "2" id = "toggleshow4"><a href="javascript:void(0)">Class</a></th>
+                        <td>&nbsp;</td>
+                    </tr>
+                    
+                    {% for model in app.models %}
+                        {% for mymodel in class_list %}
+                            {% if mymodel.lower == model.name.lower %}
+            	                <tr id="{{ model.name }}" class = "menushowhide4" >
+            		                {% include "admin/app_list.html" %}
+            	                </tr>
+            	            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+
+                    <tr id = "toggleshowhead5"  class = "toggleshowstypehead">
+                        <th scope="row" colspan = "2" id = "toggleshow5"><a href="javascript:void(0)">Other</a></th>
+                        <td>&nbsp;</td>
+                    </tr>
+                    {% for model in app.models %}
+                        {% for mymodel in other_list %}
+                            {% if mymodel.lower == model.name.lower %}
+            	                <tr id="{{ model.name }}" class = "menushowhide5" >
+            		                {% include "admin/app_list.html" %}
+            	                </tr>
+            	            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+
+                    <tr id = "toggleshowhead6"  class = "toggleshowstypehead">
+                        <th scope="row" colspan = "2" id = "toggleshow6"><a href="javascript:void(0)">All</a></th>
+                        <td>&nbsp;</td>
+                    </tr>
+                    {% for model in app.models %}
+    	                <tr id="{{ model.name }}" class = "menushowhide6" >
+    		                {% include "admin/app_list.html" %}
+    	                </tr>
+                    {% endfor %}
+
+	            {% endif %}
+        </table>
+        </div>
+    {% endifequal  %}
+    
+    {% ifnotequal app.name "Rail" %}
+        {% if user.is_superuser %}
+            <div class="module">
+            
+            <table>
+                <caption>
+                    <a href="{{ app.app_url }}" 
+                       class="section" 
+                       title="{% blocktrans with name=app.name %}Models in the {{ name }} application{% endblocktrans %}">
+                        {% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}
+                    </a>
+                </caption>
+                
+                {% for model in app.models %}
+                    <tr class = "inline-app-list">  <!-- hebin an additional line here for some error in other place change the css here,-->
+                    {% include "admin/app_list.html" %}
+                {% endfor %}
+            </table>
+            </div>
+        {% endif %}
+    {% endifnotequal  %}
+    
+    {% endfor %}
+{% else %}
+    <p>{% trans "You don't have permission to edit anything." %}</p>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>{% trans 'Recent Actions' %}</h2>
+        <h3>{% trans 'My Actions' %}</h3>
+            {% load log %}
+            {% get_admin_log 10 as admin_log for_user user %}
+            {% if not admin_log %}
+            <p>{% trans 'None available' %}</p>
+            {% else %}
+            <ul class="actionlist">
+            {% for entry in admin_log %}
+            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+                {% if entry.is_deletion or not entry.get_admin_url %}
+                    {{ entry.object_repr }}
+                {% else %}
+                    <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                {% endif %}
+                <br/>
+                {% if entry.content_type %}
+                    <span class="mini quiet">{% filter capfirst %}{% trans entry.content_type.name %}{% endfilter %}</span>
+                {% else %}
+                    <span class="mini quiet">{% trans 'Unknown content' %}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+</div>
+{% endblock %}

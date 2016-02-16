@@ -1,0 +1,213 @@
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+   
+    {% ifequal opts.module_name "rail_bidding" %}
+        
+
+        var Product_Group_Type_arrays_parent_value = [];
+        var Product_Group_Type_arrays_id = [];
+        var Product_Group_Type_arrays_value = []; 
+        
+        var Product_Type_Product_arrays_parent_value = [];
+        var Product_Type_Product_arrays_id = [];
+        var Product_Type_Product_arrays_value = []; 
+
+        {% for ay in Rail_Product_Group_Product_Type_rs %}
+            Product_Group_Type_arrays_parent_value.push("{{ay.Rail_Product_Group}}");
+            Product_Group_Type_arrays_id.push("{{ay.Rail_Product_Type.id}}");
+            Product_Group_Type_arrays_value.push("{{ay.Rail_Product_Type}}");
+        {% endfor %}
+
+        {% for ay in Rail_Product_Type_Product_rs %}
+            Product_Type_Product_arrays_parent_value.push("{{ay.Rail_Product_Type}}");
+            Product_Type_Product_arrays_id.push("{{ay.Rail_Product.id}}");
+            Product_Type_Product_arrays_value.push("{{ay.Rail_Product}}");            
+        {% endfor %}
+
+        var init_son_value = '';
+         $(document).on("change","td.field-Rail_Product_Group>select",function(){
+            var cur_id = this.id;
+            var to_id = cur_id;
+            to_id = to_id.replace("-Rail_Product_Group","-Rail_Product_Type");
+            init_son_value = $("#"+to_id).find("option:selected").text();
+            update_relation(cur_id,to_id,init_son_value,Product_Group_Type_arrays_parent_value,Product_Group_Type_arrays_id,Product_Group_Type_arrays_value)
+        });
+
+         $(document).on("change","td.field-Rail_Product_Type>select",function(){
+            var cur_id = this.id;
+            var to_id = cur_id;
+            to_id = to_id.replace("-Rail_Product_Type","-Rail_Product");
+            init_son_value = $("#"+to_id).find("option:selected").text();            
+            update_relation(cur_id,to_id,init_son_value,Product_Type_Product_arrays_parent_value,Product_Type_Product_arrays_id,Product_Type_Product_arrays_value)
+        });
+
+        $("td.field-Rail_Product_Group>select").change();
+    {% endifequal%}
+
+
+    {% ifequal opts.object_name.lower "rail_configuration" %}
+        var Product_Setup_Product_arrays_parent_value = [];
+        var Product_Setup_Product_arrays_id = [];
+        var Product_Setup_Product_arrays_value = []; 
+
+        var Product_Setup_Value_arrays_parent_value = [];
+        var Product_Setup_Value_arrays_id = [];
+        var Product_Setup_Value_arrays_value = []; 
+
+        {% for ay in Rail_Product_Product_Setup_rs %}
+            Product_Setup_Product_arrays_parent_value.push("{{ay.Rail_Product}}");
+            Product_Setup_Product_arrays_id.push("{{ay.Rail_Product_Setup.id}}");
+            Product_Setup_Product_arrays_value.push("{{ay.Rail_Product_Setup}}");            
+        {% endfor %}
+
+        {% for ay in Rail_Product_Setup_Product_Setup_Value_rs %}
+            Product_Setup_Value_arrays_parent_value.push("{{ay.Rail_Product_Setup}}");
+            Product_Setup_Value_arrays_id.push("{{ay.Rail_Product_Setup_Value.id}}");
+            Product_Setup_Value_arrays_value.push("{{ay.Rail_Product_Setup_Value}}");            
+        {% endfor %}
+
+
+        var init_son_value = '';
+        
+        // for rail_configuration
+        $("select#id_Rail_Product").change(function(){
+            var cur_id = this.id;
+            var to_id = cur_id;
+            to_id = to_id.replace("Rail_Product","Rail_Product_Setup");
+            init_son_value = $("#"+to_id).find("option:selected").text();            
+            update_relation(cur_id,to_id,init_son_value, Product_Setup_Product_arrays_parent_value,Product_Setup_Product_arrays_id,Product_Setup_Product_arrays_value)
+        });
+
+        $("select#id_Rail_Product_Setup").change(function(){
+            var cur_id = this.id;
+            var to_id = cur_id;
+            to_id = to_id.replace("Rail_Product_Setup","Rail_Product_Setup_Value");
+            init_son_value = $("#"+to_id).find("option:selected").text();            
+            update_relation(cur_id,to_id,init_son_value, Product_Setup_Value_arrays_parent_value,Product_Setup_Value_arrays_id,Product_Setup_Value_arrays_value)
+        });
+
+        $("select#id_Rail_Product").change();
+        
+    {% endifequal%}
+
+    {% ifequal opts.module_name 'rail_vehicle_project' %}                
+        var area_country_arrays_parent_value = [];
+        var area_country_arrays_id = [];
+        var area_country_arrays_value = []; 
+        var area_country_init_son_value;
+
+        var country_region_arrays_parent_value = [];
+        var country_region_arrays_id = [];
+        var country_region_arrays_value = []; 
+        var country_region_init_son_value;
+        
+        var country_province_arrays_parent_value = [];
+        var country_province_arrays_id = [];
+        var country_province_arrays_value = []; 
+        var country_province_init_son_value;
+        
+        var region_province_arrays_parent_value = [];
+        var region_province_arrays_id = [];
+        var region_province_arrays_value = []; 
+        var region_province_init_son_value;
+        
+        var province_city_arrays_parent_value = [];
+        var province_city_arrays_id = [];
+        var province_city_arrays_value = []; 
+        var province_city_init_son_value;
+        
+
+        {% for ay in area_countrys %}
+            area_country_arrays_parent_value.push("{{ay.area}}");
+            area_country_arrays_id.push("{{ay.country.id}}");
+            area_country_arrays_value.push("{{ay.country}}");
+        {% endfor %}
+        area_country_init_son_value = "{{cur_country}}";
+
+        {% for ay in country_regions %}
+            country_region_arrays_parent_value.push("{{ay.country}}");
+            country_region_arrays_id.push("{{ay.region.id}}");
+            country_region_arrays_value.push("{{ay.region}}");            
+        {% endfor %}
+        country_region_init_son_value = "{{cur_region}}";
+
+        {% for ay in country_provinces %}
+            country_province_arrays_parent_value.push("{{ay.country}}");
+            country_province_arrays_id.push("{{ay.province.id}}");
+            country_province_arrays_value.push("{{ay.province}}");            
+        {% endfor %}
+        country_province_init_son_value = "{{cur_province}}";
+
+        {% for ay in region_provinces %}
+            region_province_arrays_parent_value.push("{{ay.region}}");
+            region_province_arrays_id.push("{{ay.province.id}}");
+            region_province_arrays_value.push("{{ay.province}}");            
+        {% endfor %}
+        region_province_init_son_value = "{{cur_province}}";        
+
+        {% for ay in province_citys %}
+            province_city_arrays_parent_value.push("{{ay.province}}");
+            province_city_arrays_id.push("{{ay.city.id}}");
+            province_city_arrays_value.push("{{ay.city}}");            
+        {% endfor %}
+        province_city_init_son_value = "{{cur_city}}";
+
+        $("#id_area").change(function(){update_relation('id_area','id_country', area_country_init_son_value, area_country_arrays_parent_value, area_country_arrays_id, area_country_arrays_value )});
+        $("#id_country").change(function(){
+            update_relation('id_country','id_region', country_region_init_son_value, country_region_arrays_parent_value, country_region_arrays_id, country_region_arrays_value);
+            update_relation('id_country','id_province', country_province_init_son_value, country_province_arrays_parent_value, country_province_arrays_id, country_province_arrays_value);}
+        );
+        //$("#id_region").change(function(){update_relation('id_region','id_province', region_province_init_son_value,region_province_arrays_parent_value,region_province_arrays_id, region_province_arrays_value )});
+        $("#id_province").change(function(){update_relation('id_province','id_city', province_city_init_son_value, province_city_arrays_parent_value, province_city_arrays_id, province_city_arrays_value)});
+
+        $("#id_area").change();    
+
+
+        var rail_class_type_arrays_parent_value = [];
+        var rail_class_type_arrays_id = [];
+        var rail_class_type_arrays_value = [];     
+
+        var rail_class_platform_arrays_parent_value = [];
+        var rail_class_platform_arrays_id = [];
+        var rail_class_platform_arrays_value = [];     
+
+        {% for ay in rail_class_types %}
+            //var m = "{{ay.Rail_Class|escapejs}}";
+            //m=m.replace("\u000D\u000A",'\n');
+            rail_class_type_arrays_parent_value.push("{{ay.Rail_Class}}");
+            rail_class_type_arrays_id.push("{{ay.Rail_Type.id}}");
+            rail_class_type_arrays_value.push("{{ay.Rail_Type}}");
+        {% endfor %}
+
+        {% for ay in rail_class_platforms %}
+            rail_class_platform_arrays_parent_value.push("{{ay.Rail_Class}}");
+            rail_class_platform_arrays_id.push("{{ay.Rail_Platform.id}}");
+            rail_class_platform_arrays_value.push("{{ay.Rail_Platform}}");
+        {% endfor %}
+
+        var init_son_value = '';
+        $(document).on("change","div.field-Rail_Class>div>select",function(){    
+//        $("div.field-Rail_Class>div>select").bind("change",function(){        
+            var cur_id = this.id;
+            var to_id = cur_id;
+            to_id = to_id.replace("-Rail_Class","-Rail_Type");
+            init_son_value = $("#"+to_id).find("option:selected").text();            
+            update_relation(cur_id,to_id,init_son_value,rail_class_type_arrays_parent_value,rail_class_type_arrays_id,rail_class_type_arrays_value)
+
+            to_id = cur_id;
+            to_id = to_id.replace("-Rail_Class","-Rail_Platform");
+            init_son_value = $("#"+to_id).find("option:selected").text();            
+            update_relation(cur_id,to_id,init_son_value,rail_class_platform_arrays_parent_value,rail_class_platform_arrays_id,rail_class_platform_arrays_value)
+
+        });
+
+        $("div.field-Rail_Class>div>select").change();
+
+
+    {% endifequal %}
+
+});
+
+</script>

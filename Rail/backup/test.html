@@ -1,0 +1,137 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block title %}{{ title }} | {% trans 'OEM project' %}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "admin/css/practice.css" %}" />
+
+<script type="text/javascript" src="Rail/static/admin/js/jquery.js"></script>
+<script type="text/javascript" src="Rail/static/admin/js/oem_project.js"></script>
+
+
+{% endblock %}
+
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block branding %}
+<h1 >{% trans 'OEM project' %}</h1>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<div id = "headline"> 
+	    <a href = "/index">home</a>
+	    <input id="save" type = "button" value = "save" class = "btn">
+	    <input id="delete" type = "button" value = "delete" class = "btn">
+	    <input id="close" type = "button" value = "close" class = "btn"> 
+	</div>
+
+	<div id = "oem-project-info" class = "div-stype">
+	    <div id = "top"  class = "div-stype">
+		    <div id = "left-top"  class = "div-stype"></div>
+		        <table id = "tb" width = 50%>
+		            <tr>
+		                <td class = "text-right" width = 30% >OEM project NO.</td>
+		                <td  width ><input id="pno" type = "text" value = "" style="width:80%;"></td>
+		            </tr>	                
+		            <tr>
+		                <td class = "text-right" align = right >Description</td>
+		                <td><input id="desc" type = "text" value = "" style="width:80%;"></td>
+		            </tr>
+		        </table>
+		    <div id = "right-top"  class = "div-stype"></div>
+		        <table id = "tb2" width = 50%>
+		            <tr>
+		                <td class = "text-right" width = 40% align = right>Created By</td>
+		                <td><input id="cb" type = "text" value = "" style="width:80%;"></td>
+		            </tr>	                
+		            <tr>
+		                <td class = "text-right"  align = right>Created Date</td>
+		                <td><input id="cd" type = "text" value = "" style="width:80%;"></td>
+		            </tr>
+		            <tr>
+		                <td  align = right>Last Modified Date</td>
+		                <td><input id="lmd" type = "text" value = "" style="width:80%;"></td>
+		            </tr>
+		        </table>
+	
+	    </div>
+	    <div id = "bottom"   class = "div-stype">
+	        <table id = "tb3" >
+	            <tr>
+	                <td width = 50px>Area</td>
+	                <td width = 150px><select id="area" value = "" style="width:80%;"></td>
+	                <td width = 50px>Country</td>
+	                <td width = 150px><select id="country" style="width:80%;" value = ""></td>
+	                <td width = 50px>&nbsp;</td>
+	                <td width = 150px>&nbsp;</td>
+	            </tr>	                
+	            <tr>
+	                <td width = 50px>Region</td>
+	                <td width = 150px ><select id="region" value = ""  style="width:80%;"></td>
+	                <td width = 50px >Province</td>
+	                <td width = 150px ><select id="province" value = ""  style="width:80%;"></td>
+	                <td width = 50px >City</td>
+	                <td width = 150px ><select id="city" value = ""  style="width:80%;"></td>
+	            </tr>
+	        </table>
+	    </div>
+	</div>
+	<div id = "addrailproject">
+	    <input id="btnaddrailproject" type = "button" 
+	           value = "add rail project" class = "btn" >
+	</div>
+	<div id = "railprojectlist" >
+	    <table id = "tb4" >
+		    <tr >
+		        <th width = 10px>1</th>
+		        <th width = 200px>2</th>
+		        <th width = 300px>3</th>
+		        <th width = 200px>4</th>
+		        <th width = 150px>5</th>
+		    </tr>
+            
+		    <tr height = 50px>
+		        <td>1</td>
+		        <td>2</td>
+		        <td>3</td>
+		        <td>4</td>
+		        <td>5</td>
+		    </tr>
+		    
+		    <tr height = 50px>
+		        <td>1</td>
+		        <td>2</td>
+		        <td>3</td>
+		        <td>4</td>
+		        <td>5</td>
+		    </tr>
+		    
+		    <tr height = 50px>
+		        <td>1</td>
+		        <td>2</td>
+		        <td>3</td>
+		        <td>4</td>
+		        <td>5</td>
+		    </tr>
+		    
+		    <tr height = 50px>
+		        <td>1</td>
+		        <td>2</td>
+		        <td>3</td>
+		        <td>4</td>
+		        <td>5</td>
+		    </tr>
+        </table>
+	</div>
+	<div id = "other-information">
+	</div>
+</div>	
+
+{% endblock %}

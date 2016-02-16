@@ -1,0 +1,1774 @@
+-- MySQL dump 10.13  Distrib 5.6.15, for Win64 (x86_64)
+--
+-- Host: localhost    Database: sales
+-- ------------------------------------------------------
+-- Server version	5.6.15
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `area`
+--
+
+DROP TABLE IF EXISTS `area`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `area` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `area`
+--
+
+LOCK TABLES `area` WRITE;
+/*!40000 ALTER TABLE `area` DISABLE KEYS */;
+/*!40000 ALTER TABLE `area` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `area_country`
+--
+
+DROP TABLE IF EXISTS `area_country`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `area_country` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `area_id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `area_country_a4563695` (`area_id`),
+  KEY `area_country_d860be3c` (`country_id`),
+  CONSTRAINT `area_id_refs_id_949f7824` FOREIGN KEY (`area_id`) REFERENCES `area` (`id`),
+  CONSTRAINT `country_id_refs_id_0511a839` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `area_country`
+--
+
+LOCK TABLES `area_country` WRITE;
+/*!40000 ALTER TABLE `area_country` DISABLE KEYS */;
+/*!40000 ALTER TABLE `area_country` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+LOCK TABLES `auth_group` WRITE;
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `group_id` (`group_id`,`permission_id`),
+  KEY `auth_group_permissions_5f412f9a` (`group_id`),
+  KEY `auth_group_permissions_83d7f98b` (`permission_id`),
+  CONSTRAINT `group_id_refs_id_f4b32aac` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  CONSTRAINT `permission_id_refs_id_6ba0f519` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group_permissions`
+--
+
+LOCK TABLES `auth_group_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `content_type_id` int(11) NOT NULL,
+  `codename` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `content_type_id` (`content_type_id`,`codename`),
+  KEY `auth_permission_37ef4eb4` (`content_type_id`),
+  CONSTRAINT `content_type_id_refs_id_d043b34a` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=166 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add area',1,'add_area'),(2,'Can change area',1,'change_area'),(3,'Can delete area',1,'delete_area'),(4,'Can add country',2,'add_country'),(5,'Can change country',2,'change_country'),(6,'Can delete country',2,'delete_country'),(7,'Can add region',3,'add_region'),(8,'Can change region',3,'change_region'),(9,'Can delete region',3,'delete_region'),(10,'Can add province',4,'add_province'),(11,'Can change province',4,'change_province'),(12,'Can delete province',4,'delete_province'),(13,'Can add city',5,'add_city'),(14,'Can change city',5,'change_city'),(15,'Can delete city',5,'delete_city'),(16,'Can add rel area country',6,'add_area_country'),(17,'Can change rel area country',6,'change_area_country'),(18,'Can delete rel area country',6,'delete_area_country'),(19,'Can add rel country region',7,'add_country_region'),(20,'Can change rel country region',7,'change_country_region'),(21,'Can delete rel country region',7,'delete_country_region'),(22,'Can add rel country province',8,'add_country_province'),(23,'Can change rel country province',8,'change_country_province'),(24,'Can delete rel country province',8,'delete_country_province'),(25,'Can add rel region province',9,'add_region_province'),(26,'Can change rel region province',9,'change_region_province'),(27,'Can delete rel region province',9,'delete_region_province'),(28,'Can add rel province city',10,'add_province_city'),(29,'Can change rel province city',10,'change_province_city'),(30,'Can delete rel province city',10,'delete_province_city'),(31,'Can add Business Year',11,'add_biz_year'),(32,'Can change Business Year',11,'change_biz_year'),(33,'Can delete Business Year',11,'delete_biz_year'),(34,'Can add Currency',12,'add_currency'),(35,'Can change Currency',12,'change_currency'),(36,'Can delete Currency',12,'delete_currency'),(37,'Can add Rail Classe',13,'add_rail_class'),(38,'Can change Rail Classe',13,'change_rail_class'),(39,'Can delete Rail Classe',13,'delete_rail_class'),(40,'Can add Rail Platform',14,'add_rail_platform'),(41,'Can change Rail Platform',14,'change_rail_platform'),(42,'Can delete Rail Platform',14,'delete_rail_platform'),(43,'Can add Rail Type',15,'add_rail_type'),(44,'Can change Rail Type',15,'change_rail_type'),(45,'Can delete Rail Type',15,'delete_rail_type'),(46,'Can add rel Rail Class - Rail Platform',16,'add_rail_class_platform_r'),(47,'Can change rel Rail Class - Rail Platform',16,'change_rail_class_platform_r'),(48,'Can delete rel Rail Class - Rail Platform',16,'delete_rail_class_platform_r'),(49,'Can add rel Rail Class - Rail Type',17,'add_rail_class_type_r'),(50,'Can change rel Rail Class - Rail Type',17,'change_rail_class_type_r'),(51,'Can delete rel Rail Class - Rail Type',17,'delete_rail_class_type_r'),(52,'Can add End User',18,'add_end_user'),(53,'Can change End User',18,'change_end_user'),(54,'Can delete End User',18,'delete_end_user'),(55,'Can add Employee',19,'add_employee'),(56,'Can change Employee',19,'change_employee'),(57,'Can delete Employee',19,'delete_employee'),(58,'Can add Decision Maker',20,'add_decision_maker'),(59,'Can change Decision Maker',20,'change_decision_maker'),(60,'Can delete Decision Maker',20,'delete_decision_maker'),(61,'Can add End User project',21,'add_rail_vehicle_project'),(62,'Can change End User project',21,'change_rail_vehicle_project'),(63,'Can delete End User project',21,'delete_rail_vehicle_project'),(64,'Can add Rail Business Scope',22,'add_rail_business_scope'),(65,'Can change Rail Business Scope',22,'change_rail_business_scope'),(66,'Can delete Rail Business Scope',22,'delete_rail_business_scope'),(67,'Can add Rail Customer',23,'add_rail_customer'),(68,'Can change Rail Customer',23,'change_rail_customer'),(69,'Can delete Rail Customer',23,'delete_rail_customer'),(70,'Can add Rail OEM Project',24,'add_rail_oem_project'),(71,'Can change Rail OEM Project',24,'change_rail_oem_project'),(72,'Can delete Rail OEM Project',24,'delete_rail_oem_project'),(73,'Can add Rail Customer Bidding',25,'add_rail_customer_bidding'),(74,'Can change Rail Customer Bidding',25,'change_rail_customer_bidding'),(75,'Can delete Rail Customer Bidding',25,'delete_rail_customer_bidding'),(76,'Can add rel Rail Customer - Rail Business Scope',26,'add_rail_customer_business_scope_r'),(77,'Can change rel Rail Customer - Rail Business Scope',26,'change_rail_customer_business_scope_r'),(78,'Can delete rel Rail Customer - Rail Business Scope',26,'delete_rail_customer_business_scope_r'),(79,'Can add Rail Vehicle Info',27,'add_rail_vehicle_info'),(80,'Can change Rail Vehicle Info',27,'change_rail_vehicle_info'),(81,'Can delete Rail Vehicle Info',27,'delete_rail_vehicle_info'),(82,'Can add Rail Contract',28,'add_rail_contract'),(83,'Can change Rail Contract',28,'change_rail_contract'),(84,'Can delete Rail Contract',28,'delete_rail_contract'),(85,'Can add Rail Bidding',29,'add_rail_bidding'),(86,'Can change Rail Bidding',29,'change_rail_bidding'),(87,'Can delete Rail Bidding',29,'delete_rail_bidding'),(88,'Can add Rail Competitor',30,'add_rail_competitor'),(89,'Can change Rail Competitor',30,'change_rail_competitor'),(90,'Can delete Rail Competitor',30,'delete_rail_competitor'),(91,'Can add Rail Competitor Bidding',31,'add_rail_competitor_bidding'),(92,'Can change Rail Competitor Bidding',31,'change_rail_competitor_bidding'),(93,'Can delete Rail Competitor Bidding',31,'delete_rail_competitor_bidding'),(94,'Can add Rail Product',32,'add_rail_product'),(95,'Can change Rail Product',32,'change_rail_product'),(96,'Can delete Rail Product',32,'delete_rail_product'),(97,'Can add Rail Product Type',33,'add_rail_product_type'),(98,'Can change Rail Product Type',33,'change_rail_product_type'),(99,'Can delete Rail Product Type',33,'delete_rail_product_type'),(100,'Can add Rail Product Setup',34,'add_rail_product_setup'),(101,'Can change Rail Product Setup',34,'change_rail_product_setup'),(102,'Can delete Rail Product Setup',34,'delete_rail_product_setup'),(103,'Can add Rail Product Setup Value',35,'add_rail_product_setup_value'),(104,'Can change Rail Product Setup Value',35,'change_rail_product_setup_value'),(105,'Can delete Rail Product Setup Value',35,'delete_rail_product_setup_value'),(106,'Can add Rail Product Group',36,'add_rail_product_group'),(107,'Can change Rail Product Group',36,'change_rail_product_group'),(108,'Can delete Rail Product Group',36,'delete_rail_product_group'),(109,'Can add rel Rail Product Group - Product Type',37,'add_rail_product_group_product_type_r'),(110,'Can change rel Rail Product Group - Product Type',37,'change_rail_product_group_product_type_r'),(111,'Can delete rel Rail Product Group - Product Type',37,'delete_rail_product_group_product_type_r'),(112,'Can add rel Rail Product Type - Product',38,'add_rail_product_type_product_r'),(113,'Can change rel Rail Product Type - Product',38,'change_rail_product_type_product_r'),(114,'Can delete rel Rail Product Type - Product',38,'delete_rail_product_type_product_r'),(115,'Can add rel Rail Product - Product Setup',39,'add_rail_product_product_setup_r'),(116,'Can change rel Rail Product - Product Setup',39,'change_rail_product_product_setup_r'),(117,'Can delete rel Rail Product - Product Setup',39,'delete_rail_product_product_setup_r'),(118,'Can add rel Rail Product Setup - Setup Type',40,'add_rail_product_setup_product_setup_value_r'),(119,'Can change rel Rail Product Setup - Setup Type',40,'change_rail_product_setup_product_setup_value_r'),(120,'Can delete rel Rail Product Setup - Setup Type',40,'delete_rail_product_setup_product_setup_value_r'),(121,'Can add Rail Package',41,'add_rail_package'),(122,'Can change Rail Package',41,'change_rail_package'),(123,'Can delete Rail Package',41,'delete_rail_package'),(124,'Can add Rail Configuration',42,'add_rail_configuration'),(125,'Can change Rail Configuration',42,'change_rail_configuration'),(126,'Can delete Rail Configuration',42,'delete_rail_configuration'),(127,'Can add Rail Package Line',43,'add_rail_package_line'),(128,'Can change Rail Package Line',43,'change_rail_package_line'),(129,'Can delete Rail Package Line',43,'delete_rail_package_line'),(130,'Can add Product List',44,'add_product_lists'),(131,'Can change Product List',44,'change_product_lists'),(132,'Can delete Product List',44,'delete_product_lists'),(133,'Can add Rail Department',45,'add_rail_department'),(134,'Can change Rail Department',45,'change_rail_department'),(135,'Can delete Rail Department',45,'delete_rail_department'),(136,'Can add Rail Project in Charge',46,'add_rail_project_in_charge'),(137,'Can change Rail Project in Charge',46,'change_rail_project_in_charge'),(138,'Can delete Rail Project in Charge',46,'delete_rail_project_in_charge'),(139,'Can add Rail Tracking',47,'add_rail_tracking'),(140,'Can change Rail Tracking',47,'change_rail_tracking'),(141,'Can delete Rail Tracking',47,'delete_rail_tracking'),(142,'Can add permission',48,'add_permission'),(143,'Can change permission',48,'change_permission'),(144,'Can delete permission',48,'delete_permission'),(145,'Can add group',49,'add_group'),(146,'Can change group',49,'change_group'),(147,'Can delete group',49,'delete_group'),(148,'Can add user',50,'add_user'),(149,'Can change user',50,'change_user'),(150,'Can delete user',50,'delete_user'),(151,'Can add content type',51,'add_contenttype'),(152,'Can change content type',51,'change_contenttype'),(153,'Can delete content type',51,'delete_contenttype'),(154,'Can add session',52,'add_session'),(155,'Can change session',52,'change_session'),(156,'Can delete session',52,'delete_session'),(157,'Can add site',53,'add_site'),(158,'Can change site',53,'change_site'),(159,'Can delete site',53,'delete_site'),(160,'Can add flat page',54,'add_flatpage'),(161,'Can change flat page',54,'change_flatpage'),(162,'Can delete flat page',54,'delete_flatpage'),(163,'Can add log entry',55,'add_logentry'),(164,'Can change log entry',55,'change_logentry'),(165,'Can delete log entry',55,'delete_logentry');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user`
+--
+
+DROP TABLE IF EXISTS `auth_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) NOT NULL,
+  `last_login` datetime NOT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  `email` varchar(75) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user`
+--
+
+LOCK TABLES `auth_user` WRITE;
+/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$10000$G6W43UHF1W4s$QxOo1EjsACV6uVtHaZzcDNeqYRpxMTvUlO9tmTvBQu4=','2015-12-12 03:41:53',1,'alu','','','',1,1,'2015-12-12 03:36:16');
+/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_groups`
+--
+
+DROP TABLE IF EXISTS `auth_user_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`,`group_id`),
+  KEY `auth_user_groups_6340c63c` (`user_id`),
+  KEY `auth_user_groups_5f412f9a` (`group_id`),
+  CONSTRAINT `user_id_refs_id_40c41112` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `group_id_refs_id_274b862c` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_groups`
+--
+
+LOCK TABLES `auth_user_groups` WRITE;
+/*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_user_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_user_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_user_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`,`permission_id`),
+  KEY `auth_user_user_permissions_6340c63c` (`user_id`),
+  KEY `auth_user_user_permissions_83d7f98b` (`permission_id`),
+  CONSTRAINT `user_id_refs_id_4dc23c39` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `permission_id_refs_id_35d9ac25` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_user_permissions`
+--
+
+LOCK TABLES `auth_user_user_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `biz_year`
+--
+
+DROP TABLE IF EXISTS `biz_year`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `biz_year` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `biz_year`
+--
+
+LOCK TABLES `biz_year` WRITE;
+/*!40000 ALTER TABLE `biz_year` DISABLE KEYS */;
+/*!40000 ALTER TABLE `biz_year` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `city`
+--
+
+DROP TABLE IF EXISTS `city`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `city` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `city`
+--
+
+LOCK TABLES `city` WRITE;
+/*!40000 ALTER TABLE `city` DISABLE KEYS */;
+/*!40000 ALTER TABLE `city` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `country`
+--
+
+DROP TABLE IF EXISTS `country`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `country` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `country`
+--
+
+LOCK TABLES `country` WRITE;
+/*!40000 ALTER TABLE `country` DISABLE KEYS */;
+/*!40000 ALTER TABLE `country` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `country_province`
+--
+
+DROP TABLE IF EXISTS `country_province`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `country_province` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `country_id` int(11) NOT NULL,
+  `province_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `country_province_d860be3c` (`country_id`),
+  KEY `country_province_35b8c010` (`province_id`),
+  CONSTRAINT `province_id_refs_id_442c1706` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`),
+  CONSTRAINT `country_id_refs_id_744e4543` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `country_province`
+--
+
+LOCK TABLES `country_province` WRITE;
+/*!40000 ALTER TABLE `country_province` DISABLE KEYS */;
+/*!40000 ALTER TABLE `country_province` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `country_region`
+--
+
+DROP TABLE IF EXISTS `country_region`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `country_region` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `country_id` int(11) NOT NULL,
+  `region_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `country_region_d860be3c` (`country_id`),
+  KEY `country_region_55a4ce96` (`region_id`),
+  CONSTRAINT `region_id_refs_id_eec49946` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`),
+  CONSTRAINT `country_id_refs_id_02200bb4` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `country_region`
+--
+
+LOCK TABLES `country_region` WRITE;
+/*!40000 ALTER TABLE `country_region` DISABLE KEYS */;
+/*!40000 ALTER TABLE `country_region` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `currency`
+--
+
+DROP TABLE IF EXISTS `currency`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `currency` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(10) NOT NULL,
+  `Rate` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `currency`
+--
+
+LOCK TABLES `currency` WRITE;
+/*!40000 ALTER TABLE `currency` DISABLE KEYS */;
+/*!40000 ALTER TABLE `currency` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `decision_maker`
+--
+
+DROP TABLE IF EXISTS `decision_maker`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `decision_maker` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(300) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `decision_maker`
+--
+
+LOCK TABLES `decision_maker` WRITE;
+/*!40000 ALTER TABLE `decision_maker` DISABLE KEYS */;
+/*!40000 ALTER TABLE `decision_maker` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_admin_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action_time` datetime NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content_type_id` int(11) DEFAULT NULL,
+  `object_id` longtext,
+  `object_repr` varchar(200) NOT NULL,
+  `action_flag` smallint(5) unsigned NOT NULL,
+  `change_message` longtext NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_6340c63c` (`user_id`),
+  KEY `django_admin_log_37ef4eb4` (`content_type_id`),
+  CONSTRAINT `content_type_id_refs_id_93d2d1f8` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `user_id_refs_id_c0d12874` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_admin_log`
+--
+
+LOCK TABLES `django_admin_log` WRITE;
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_content_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `app_label` (`app_label`,`model`)
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (1,'area','Rail','area'),(2,'country','Rail','country'),(3,'region','Rail','region'),(4,'province','Rail','province'),(5,'city','Rail','city'),(6,'rel area country','Rail','area_country'),(7,'rel country region','Rail','country_region'),(8,'rel country province','Rail','country_province'),(9,'rel region province','Rail','region_province'),(10,'rel province city','Rail','province_city'),(11,'Business Year','Rail','biz_year'),(12,'Currency','Rail','currency'),(13,'Rail Classe','Rail','rail_class'),(14,'Rail Platform','Rail','rail_platform'),(15,'Rail Type','Rail','rail_type'),(16,'rel Rail Class - Rail Platform','Rail','rail_class_platform_r'),(17,'rel Rail Class - Rail Type','Rail','rail_class_type_r'),(18,'End User','Rail','end_user'),(19,'Employee','Rail','employee'),(20,'Decision Maker','Rail','decision_maker'),(21,'End User project','Rail','rail_vehicle_project'),(22,'Rail Business Scope','Rail','rail_business_scope'),(23,'Rail Customer','Rail','rail_customer'),(24,'Rail OEM Project','Rail','rail_oem_project'),(25,'Rail Customer Bidding','Rail','rail_customer_bidding'),(26,'rel Rail Customer - Rail Business Scope','Rail','rail_customer_business_scope_r'),(27,'Rail Vehicle Info','Rail','rail_vehicle_info'),(28,'Rail Contract','Rail','rail_contract'),(29,'Rail Bidding','Rail','rail_bidding'),(30,'Rail Competitor','Rail','rail_competitor'),(31,'Rail Competitor Bidding','Rail','rail_competitor_bidding'),(32,'Rail Product','Rail','rail_product'),(33,'Rail Product Type','Rail','rail_product_type'),(34,'Rail Product Setup','Rail','rail_product_setup'),(35,'Rail Product Setup Value','Rail','rail_product_setup_value'),(36,'Rail Product Group','Rail','rail_product_group'),(37,'rel Rail Product Group - Product Type','Rail','rail_product_group_product_type_r'),(38,'rel Rail Product Type - Product','Rail','rail_product_type_product_r'),(39,'rel Rail Product - Product Setup','Rail','rail_product_product_setup_r'),(40,'rel Rail Product Setup - Setup Type','Rail','rail_product_setup_product_setup_value_r'),(41,'Rail Package','Rail','rail_package'),(42,'Rail Configuration','Rail','rail_configuration'),(43,'Rail Package Line','Rail','rail_package_line'),(44,'Product List','Rail','product_lists'),(45,'Rail Department','Rail','rail_department'),(46,'Rail Project in Charge','Rail','rail_project_in_charge'),(47,'Rail Tracking','Rail','rail_tracking'),(48,'permission','auth','permission'),(49,'group','auth','group'),(50,'user','auth','user'),(51,'content type','contenttypes','contenttype'),(52,'session','sessions','session'),(53,'site','sites','site'),(54,'flat page','flatpages','flatpage'),(55,'log entry','admin','logentry');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_flatpage`
+--
+
+DROP TABLE IF EXISTS `django_flatpage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_flatpage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(100) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `content` longtext NOT NULL,
+  `enable_comments` tinyint(1) NOT NULL,
+  `template_name` varchar(70) NOT NULL,
+  `registration_required` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_flatpage_c379dc61` (`url`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_flatpage`
+--
+
+LOCK TABLES `django_flatpage` WRITE;
+/*!40000 ALTER TABLE `django_flatpage` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_flatpage` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_flatpage_sites`
+--
+
+DROP TABLE IF EXISTS `django_flatpage_sites`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_flatpage_sites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `flatpage_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `flatpage_id` (`flatpage_id`,`site_id`),
+  KEY `django_flatpage_sites_872c4601` (`flatpage_id`),
+  KEY `django_flatpage_sites_99732b5c` (`site_id`),
+  CONSTRAINT `flatpage_id_refs_id_83cd0023` FOREIGN KEY (`flatpage_id`) REFERENCES `django_flatpage` (`id`),
+  CONSTRAINT `site_id_refs_id_2df951cb` FOREIGN KEY (`site_id`) REFERENCES `django_site` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_flatpage_sites`
+--
+
+LOCK TABLES `django_flatpage_sites` WRITE;
+/*!40000 ALTER TABLE `django_flatpage_sites` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_flatpage_sites` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_b7b81f0c` (`expire_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+INSERT INTO `django_session` VALUES ('euhfbkal4nbrpt64p4eie7i636gyn13t','NzgwMWIwNGU3OWZkNjk2NDE1MDg3ODM0ZjhjMDAyZDc4MWJlM2ExMTqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQSKAQF1Lg==','2015-12-26 03:41:53');
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_site`
+--
+
+DROP TABLE IF EXISTS `django_site`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_site` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `domain` varchar(100) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_site`
+--
+
+LOCK TABLES `django_site` WRITE;
+/*!40000 ALTER TABLE `django_site` DISABLE KEYS */;
+INSERT INTO `django_site` VALUES (1,'example.com','example.com');
+/*!40000 ALTER TABLE `django_site` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `employee`
+--
+
+DROP TABLE IF EXISTS `employee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `employee` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(300) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `employee`
+--
+
+LOCK TABLES `employee` WRITE;
+/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `end_user`
+--
+
+DROP TABLE IF EXISTS `end_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `end_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(300) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `end_user`
+--
+
+LOCK TABLES `end_user` WRITE;
+/*!40000 ALTER TABLE `end_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `end_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product_lists`
+--
+
+DROP TABLE IF EXISTS `product_lists`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_lists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Rail_Bidding_id` int(11) NOT NULL,
+  `Description` longtext,
+  `Quantity` int(11) NOT NULL,
+  `Based_Price_exclude_VAT` decimal(12,2) NOT NULL,
+  `Rail_Configuration_id` int(11) DEFAULT NULL,
+  `Rail_Product_Group_id` int(11) NOT NULL,
+  `Rail_Product_Type_id` int(11) NOT NULL,
+  `Rail_Product_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Product_lists_04dba7c7` (`Rail_Bidding_id`),
+  KEY `Product_lists_fe77b497` (`Rail_Configuration_id`),
+  KEY `Product_lists_27081908` (`Rail_Product_Group_id`),
+  KEY `Product_lists_51053140` (`Rail_Product_Type_id`),
+  KEY `Product_lists_6d2ce3bd` (`Rail_Product_id`),
+  CONSTRAINT `Rail_Product_Type_id_refs_id_3809ad03` FOREIGN KEY (`Rail_Product_Type_id`) REFERENCES `rail_product_type` (`id`),
+  CONSTRAINT `Rail_Bidding_id_refs_id_76ae471b` FOREIGN KEY (`Rail_Bidding_id`) REFERENCES `rail_bidding` (`id`),
+  CONSTRAINT `Rail_Configuration_id_refs_id_209a633d` FOREIGN KEY (`Rail_Configuration_id`) REFERENCES `rail_configuration` (`id`),
+  CONSTRAINT `Rail_Product_Group_id_refs_id_e12d3d9c` FOREIGN KEY (`Rail_Product_Group_id`) REFERENCES `rail_product_group` (`id`),
+  CONSTRAINT `Rail_Product_id_refs_id_8a0109c9` FOREIGN KEY (`Rail_Product_id`) REFERENCES `rail_product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_lists`
+--
+
+LOCK TABLES `product_lists` WRITE;
+/*!40000 ALTER TABLE `product_lists` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product_lists` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `province`
+--
+
+DROP TABLE IF EXISTS `province`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `province` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `province`
+--
+
+LOCK TABLES `province` WRITE;
+/*!40000 ALTER TABLE `province` DISABLE KEYS */;
+/*!40000 ALTER TABLE `province` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `province_city`
+--
+
+DROP TABLE IF EXISTS `province_city`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `province_city` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `province_id` int(11) NOT NULL,
+  `city_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `province_city_35b8c010` (`province_id`),
+  KEY `province_city_b376980e` (`city_id`),
+  CONSTRAINT `city_id_refs_id_22f1a7af` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`),
+  CONSTRAINT `province_id_refs_id_2af7852c` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `province_city`
+--
+
+LOCK TABLES `province_city` WRITE;
+/*!40000 ALTER TABLE `province_city` DISABLE KEYS */;
+/*!40000 ALTER TABLE `province_city` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_bidding`
+--
+
+DROP TABLE IF EXISTS `rail_bidding`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_bidding` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Reason` longtext,
+  `Voith_Chance` varchar(5) NOT NULL,
+  `Commercial_Priority` varchar(1) DEFAULT NULL,
+  `Commercial_Status` varchar(300) DEFAULT NULL,
+  `Technical_Priority` varchar(1) DEFAULT NULL,
+  `Technical_Status` varchar(300) DEFAULT NULL,
+  `OEM_Principle` varchar(100) DEFAULT NULL,
+  `Bidding_Status` varchar(20) DEFAULT NULL,
+  `Ref_No1` varchar(100) DEFAULT NULL,
+  `Ref_No2` varchar(100) DEFAULT NULL,
+  `Decision_Maker_id` int(11) DEFAULT NULL,
+  `Total_Bidding_Price_exclude_VAT` decimal(12,2) DEFAULT NULL,
+  `Rail_OEM_Project_id` int(11) DEFAULT NULL,
+  `Rail_Contract_id` int(11) DEFAULT NULL,
+  `Currency_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_bidding_b102661b` (`Decision_Maker_id`),
+  KEY `rail_bidding_d901f645` (`Rail_OEM_Project_id`),
+  KEY `rail_bidding_ef1820bd` (`Rail_Contract_id`),
+  KEY `rail_bidding_e1d59b04` (`Currency_id`),
+  CONSTRAINT `Rail_Contract_id_refs_id_9705f893` FOREIGN KEY (`Rail_Contract_id`) REFERENCES `rail_contract` (`id`),
+  CONSTRAINT `Currency_id_refs_id_f521df51` FOREIGN KEY (`Currency_id`) REFERENCES `currency` (`id`),
+  CONSTRAINT `Decision_Maker_id_refs_id_90e99020` FOREIGN KEY (`Decision_Maker_id`) REFERENCES `decision_maker` (`id`),
+  CONSTRAINT `Rail_OEM_Project_id_refs_id_95d17f7f` FOREIGN KEY (`Rail_OEM_Project_id`) REFERENCES `rail_oem_project` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_bidding`
+--
+
+LOCK TABLES `rail_bidding` WRITE;
+/*!40000 ALTER TABLE `rail_bidding` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_bidding` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_business_scope`
+--
+
+DROP TABLE IF EXISTS `rail_business_scope`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_business_scope` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) NOT NULL,
+  `Description` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_business_scope`
+--
+
+LOCK TABLES `rail_business_scope` WRITE;
+/*!40000 ALTER TABLE `rail_business_scope` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_business_scope` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_class`
+--
+
+DROP TABLE IF EXISTS `rail_class`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_class` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) NOT NULL,
+  `Description` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_class`
+--
+
+LOCK TABLES `rail_class` WRITE;
+/*!40000 ALTER TABLE `rail_class` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_class` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_class_platform_r`
+--
+
+DROP TABLE IF EXISTS `rail_class_platform_r`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_class_platform_r` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Rail_Class_id` int(11) NOT NULL,
+  `Rail_Platform_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_class_platform_r_13e1a675` (`Rail_Class_id`),
+  KEY `rail_class_platform_r_4b54e609` (`Rail_Platform_id`),
+  CONSTRAINT `Rail_Class_id_refs_id_c15f14e3` FOREIGN KEY (`Rail_Class_id`) REFERENCES `rail_class` (`id`),
+  CONSTRAINT `Rail_Platform_id_refs_id_9f9b5112` FOREIGN KEY (`Rail_Platform_id`) REFERENCES `rail_platform` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_class_platform_r`
+--
+
+LOCK TABLES `rail_class_platform_r` WRITE;
+/*!40000 ALTER TABLE `rail_class_platform_r` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_class_platform_r` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_class_type_r`
+--
+
+DROP TABLE IF EXISTS `rail_class_type_r`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_class_type_r` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Rail_Class_id` int(11) NOT NULL,
+  `Rail_Type_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_class_type_r_13e1a675` (`Rail_Class_id`),
+  KEY `rail_class_type_r_b3e2a55d` (`Rail_Type_id`),
+  CONSTRAINT `Rail_Class_id_refs_id_f4c16a67` FOREIGN KEY (`Rail_Class_id`) REFERENCES `rail_class` (`id`),
+  CONSTRAINT `Rail_Type_id_refs_id_582cb804` FOREIGN KEY (`Rail_Type_id`) REFERENCES `rail_type` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_class_type_r`
+--
+
+LOCK TABLES `rail_class_type_r` WRITE;
+/*!40000 ALTER TABLE `rail_class_type_r` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_class_type_r` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_competitor`
+--
+
+DROP TABLE IF EXISTS `rail_competitor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_competitor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) NOT NULL,
+  `Description` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_competitor`
+--
+
+LOCK TABLES `rail_competitor` WRITE;
+/*!40000 ALTER TABLE `rail_competitor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_competitor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_competitor_bidding`
+--
+
+DROP TABLE IF EXISTS `rail_competitor_bidding`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_competitor_bidding` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Rail_Competitor_id` int(11) NOT NULL,
+  `Winner_Flag` tinyint(1) NOT NULL,
+  `Comments` longtext,
+  `Currency_id` int(11) NOT NULL,
+  `Competitor_Price_exclude_VAT` double DEFAULT NULL,
+  `Rail_Bidding_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_competitor_bidding_8a7ddab1` (`Rail_Competitor_id`),
+  KEY `rail_competitor_bidding_e1d59b04` (`Currency_id`),
+  KEY `rail_competitor_bidding_04dba7c7` (`Rail_Bidding_id`),
+  CONSTRAINT `Rail_Competitor_id_refs_id_93156cb8` FOREIGN KEY (`Rail_Competitor_id`) REFERENCES `rail_competitor` (`id`),
+  CONSTRAINT `Currency_id_refs_id_43c8f380` FOREIGN KEY (`Currency_id`) REFERENCES `currency` (`id`),
+  CONSTRAINT `Rail_Bidding_id_refs_id_59056915` FOREIGN KEY (`Rail_Bidding_id`) REFERENCES `rail_bidding` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_competitor_bidding`
+--
+
+LOCK TABLES `rail_competitor_bidding` WRITE;
+/*!40000 ALTER TABLE `rail_competitor_bidding` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_competitor_bidding` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_configuration`
+--
+
+DROP TABLE IF EXISTS `rail_configuration`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_configuration` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Based_Price_exclude_VAT` decimal(12,2) DEFAULT NULL,
+  `Rail_Product_id` int(11) NOT NULL,
+  `Rail_Product_Setup_id` int(11) NOT NULL,
+  `Rail_Product_Setup_Value_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_configuration_6d2ce3bd` (`Rail_Product_id`),
+  KEY `rail_configuration_c4f9e5d9` (`Rail_Product_Setup_id`),
+  KEY `rail_configuration_fbee1d94` (`Rail_Product_Setup_Value_id`),
+  CONSTRAINT `Rail_Product_Setup_Value_id_refs_id_ac91fdff` FOREIGN KEY (`Rail_Product_Setup_Value_id`) REFERENCES `rail_product_setup_value` (`id`),
+  CONSTRAINT `Rail_Product_id_refs_id_c2c03e78` FOREIGN KEY (`Rail_Product_id`) REFERENCES `rail_product` (`id`),
+  CONSTRAINT `Rail_Product_Setup_id_refs_id_6a8d169d` FOREIGN KEY (`Rail_Product_Setup_id`) REFERENCES `rail_product_setup` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_configuration`
+--
+
+LOCK TABLES `rail_configuration` WRITE;
+/*!40000 ALTER TABLE `rail_configuration` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_configuration` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_contract`
+--
+
+DROP TABLE IF EXISTS `rail_contract`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_contract` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Delivery_Terms` varchar(500) DEFAULT NULL,
+  `Customer_contract_no` varchar(100) NOT NULL,
+  `VTA_contract_no` varchar(100) DEFAULT NULL,
+  `Total_Value_exclude_VAT` double DEFAULT NULL,
+  `Sales_Commission_Flag` tinyint(1) NOT NULL,
+  `Percentage_Down_Payment` double DEFAULT NULL,
+  `Total_Value_DP_exclude_VAT` double DEFAULT NULL,
+  `Advance_Payment_Bond_Percentage` double DEFAULT NULL,
+  `Performance_bond` double DEFAULT NULL,
+  `Contract_Training_Flag` tinyint(1) NOT NULL,
+  `Quality_Bond_Percentage` double DEFAULT NULL,
+  `Warranty_Period` int(11) NOT NULL,
+  `Remark` varchar(500) DEFAULT NULL,
+  `Currency_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_contract_e1d59b04` (`Currency_id`),
+  CONSTRAINT `Currency_id_refs_id_469540b7` FOREIGN KEY (`Currency_id`) REFERENCES `currency` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_contract`
+--
+
+LOCK TABLES `rail_contract` WRITE;
+/*!40000 ALTER TABLE `rail_contract` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_contract` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_customer`
+--
+
+DROP TABLE IF EXISTS `rail_customer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_customer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Number` varchar(100) NOT NULL,
+  `Name` varchar(100) NOT NULL,
+  `Description` longtext,
+  `Location` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_customer`
+--
+
+LOCK TABLES `rail_customer` WRITE;
+/*!40000 ALTER TABLE `rail_customer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_customer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_customer_bidding`
+--
+
+DROP TABLE IF EXISTS `rail_customer_bidding`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_customer_bidding` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `OEM_Chance` varchar(5) NOT NULL,
+  `Comments` varchar(500) DEFAULT NULL,
+  `Rail_Customer_id` int(11) NOT NULL,
+  `Currency_id` int(11) NOT NULL,
+  `Rail_OEM_Project_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_customer_bidding_7c85e59d` (`Rail_Customer_id`),
+  KEY `rail_customer_bidding_e1d59b04` (`Currency_id`),
+  KEY `rail_customer_bidding_d901f645` (`Rail_OEM_Project_id`),
+  CONSTRAINT `Currency_id_refs_id_f68667aa` FOREIGN KEY (`Currency_id`) REFERENCES `currency` (`id`),
+  CONSTRAINT `Rail_Customer_id_refs_id_a0d10a07` FOREIGN KEY (`Rail_Customer_id`) REFERENCES `rail_customer` (`id`),
+  CONSTRAINT `Rail_OEM_Project_id_refs_id_26a35f79` FOREIGN KEY (`Rail_OEM_Project_id`) REFERENCES `rail_oem_project` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_customer_bidding`
+--
+
+LOCK TABLES `rail_customer_bidding` WRITE;
+/*!40000 ALTER TABLE `rail_customer_bidding` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_customer_bidding` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_customer_business_scope_r`
+--
+
+DROP TABLE IF EXISTS `rail_customer_business_scope_r`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_customer_business_scope_r` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Rail_Customer_id` int(11) NOT NULL,
+  `Rail_Business_Scope_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_customer_business_scope_r_7c85e59d` (`Rail_Customer_id`),
+  KEY `rail_customer_business_scope_r_d2c80b2a` (`Rail_Business_Scope_id`),
+  CONSTRAINT `Rail_Business_Scope_id_refs_id_98f63b11` FOREIGN KEY (`Rail_Business_Scope_id`) REFERENCES `rail_business_scope` (`id`),
+  CONSTRAINT `Rail_Customer_id_refs_id_b6b10aa3` FOREIGN KEY (`Rail_Customer_id`) REFERENCES `rail_customer` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_customer_business_scope_r`
+--
+
+LOCK TABLES `rail_customer_business_scope_r` WRITE;
+/*!40000 ALTER TABLE `rail_customer_business_scope_r` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_customer_business_scope_r` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_customer_rail_business_scope`
+--
+
+DROP TABLE IF EXISTS `rail_customer_rail_business_scope`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_customer_rail_business_scope` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rail_customer_id` int(11) NOT NULL,
+  `rail_business_scope_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `rail_customer_id` (`rail_customer_id`,`rail_business_scope_id`),
+  KEY `rail_customer_Rail_Business_Scope_ef8d0f59` (`rail_customer_id`),
+  KEY `rail_customer_Rail_Business_Scope_fc458808` (`rail_business_scope_id`),
+  CONSTRAINT `rail_customer_id_refs_id_b18edd01` FOREIGN KEY (`rail_customer_id`) REFERENCES `rail_customer` (`id`),
+  CONSTRAINT `rail_business_scope_id_refs_id_62813703` FOREIGN KEY (`rail_business_scope_id`) REFERENCES `rail_business_scope` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_customer_rail_business_scope`
+--
+
+LOCK TABLES `rail_customer_rail_business_scope` WRITE;
+/*!40000 ALTER TABLE `rail_customer_rail_business_scope` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_customer_rail_business_scope` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_department`
+--
+
+DROP TABLE IF EXISTS `rail_department`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_department` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `Description` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_department`
+--
+
+LOCK TABLES `rail_department` WRITE;
+/*!40000 ALTER TABLE `rail_department` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_department` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_oem_project`
+--
+
+DROP TABLE IF EXISTS `rail_oem_project`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_oem_project` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `oem_project_code` varchar(10) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `Description` longtext,
+  `vehicle_project_status` varchar(50) NOT NULL,
+  `ts_qty` int(11) DEFAULT NULL,
+  `Created_by` varchar(50) DEFAULT NULL,
+  `Created_date` date DEFAULT NULL,
+  `Last_modified_date` date DEFAULT NULL,
+  `Biz_Year_id` int(11) NOT NULL,
+  `Rail_Customer_id` int(11) NOT NULL,
+  `Rail_Vehicle_Project_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_oem_project_aed74eed` (`Biz_Year_id`),
+  KEY `rail_oem_project_7c85e59d` (`Rail_Customer_id`),
+  KEY `rail_oem_project_019cfb96` (`Rail_Vehicle_Project_id`),
+  CONSTRAINT `Biz_Year_id_refs_id_350a97d8` FOREIGN KEY (`Biz_Year_id`) REFERENCES `biz_year` (`id`),
+  CONSTRAINT `Rail_Customer_id_refs_id_d1dc3c0d` FOREIGN KEY (`Rail_Customer_id`) REFERENCES `rail_customer` (`id`),
+  CONSTRAINT `Rail_Vehicle_Project_id_refs_id_52943ef5` FOREIGN KEY (`Rail_Vehicle_Project_id`) REFERENCES `rail_vehicle_project` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_oem_project`
+--
+
+LOCK TABLES `rail_oem_project` WRITE;
+/*!40000 ALTER TABLE `rail_oem_project` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_oem_project` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_package`
+--
+
+DROP TABLE IF EXISTS `rail_package`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_package` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) NOT NULL,
+  `Description` longtext,
+  `Total_Price_exclude_VAT` decimal(12,2) NOT NULL,
+  `Created_by` varchar(100) DEFAULT NULL,
+  `Created_date` date DEFAULT NULL,
+  `Last_modified_date` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_package`
+--
+
+LOCK TABLES `rail_package` WRITE;
+/*!40000 ALTER TABLE `rail_package` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_package` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_package_line`
+--
+
+DROP TABLE IF EXISTS `rail_package_line`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_package_line` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Rail_Package_id` int(11) NOT NULL,
+  `Description` longtext,
+  `Quantity` int(11) NOT NULL,
+  `Based_Price_exclude_VAT` decimal(12,2) NOT NULL,
+  `Rail_Configuration_id` int(11) DEFAULT NULL,
+  `Rail_Product_Group_id` int(11) NOT NULL,
+  `Rail_Product_Type_id` int(11) NOT NULL,
+  `Rail_Product_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_package_line_2acbb112` (`Rail_Package_id`),
+  KEY `rail_package_line_fe77b497` (`Rail_Configuration_id`),
+  KEY `rail_package_line_27081908` (`Rail_Product_Group_id`),
+  KEY `rail_package_line_51053140` (`Rail_Product_Type_id`),
+  KEY `rail_package_line_6d2ce3bd` (`Rail_Product_id`),
+  CONSTRAINT `Rail_Product_Type_id_refs_id_88967261` FOREIGN KEY (`Rail_Product_Type_id`) REFERENCES `rail_product_type` (`id`),
+  CONSTRAINT `Rail_Configuration_id_refs_id_6b5dfdd2` FOREIGN KEY (`Rail_Configuration_id`) REFERENCES `rail_configuration` (`id`),
+  CONSTRAINT `Rail_Package_id_refs_id_c7091bdf` FOREIGN KEY (`Rail_Package_id`) REFERENCES `rail_package` (`id`),
+  CONSTRAINT `Rail_Product_Group_id_refs_id_e0a0e465` FOREIGN KEY (`Rail_Product_Group_id`) REFERENCES `rail_product_group` (`id`),
+  CONSTRAINT `Rail_Product_id_refs_id_7373eb2b` FOREIGN KEY (`Rail_Product_id`) REFERENCES `rail_product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_package_line`
+--
+
+LOCK TABLES `rail_package_line` WRITE;
+/*!40000 ALTER TABLE `rail_package_line` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_package_line` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_package_rail_bidding`
+--
+
+DROP TABLE IF EXISTS `rail_package_rail_bidding`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_package_rail_bidding` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rail_package_id` int(11) NOT NULL,
+  `rail_bidding_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `rail_package_id` (`rail_package_id`,`rail_bidding_id`),
+  KEY `rail_package_Rail_Bidding_bc154e84` (`rail_package_id`),
+  KEY `rail_package_Rail_Bidding_9c61c92e` (`rail_bidding_id`),
+  CONSTRAINT `rail_package_id_refs_id_02ffb936` FOREIGN KEY (`rail_package_id`) REFERENCES `rail_package` (`id`),
+  CONSTRAINT `rail_bidding_id_refs_id_b6c594e3` FOREIGN KEY (`rail_bidding_id`) REFERENCES `rail_bidding` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_package_rail_bidding`
+--
+
+LOCK TABLES `rail_package_rail_bidding` WRITE;
+/*!40000 ALTER TABLE `rail_package_rail_bidding` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_package_rail_bidding` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_platform`
+--
+
+DROP TABLE IF EXISTS `rail_platform`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_platform` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) NOT NULL,
+  `Description` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_platform`
+--
+
+LOCK TABLES `rail_platform` WRITE;
+/*!40000 ALTER TABLE `rail_platform` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_platform` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_product`
+--
+
+DROP TABLE IF EXISTS `rail_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `Description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_product`
+--
+
+LOCK TABLES `rail_product` WRITE;
+/*!40000 ALTER TABLE `rail_product` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_product_group`
+--
+
+DROP TABLE IF EXISTS `rail_product_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_product_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `Description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_product_group`
+--
+
+LOCK TABLES `rail_product_group` WRITE;
+/*!40000 ALTER TABLE `rail_product_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_product_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_product_group_product_type_r`
+--
+
+DROP TABLE IF EXISTS `rail_product_group_product_type_r`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_product_group_product_type_r` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Rail_Product_Group_id` int(11) NOT NULL,
+  `Rail_Product_Type_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_product_group_product_type_r_27081908` (`Rail_Product_Group_id`),
+  KEY `rail_product_group_product_type_r_51053140` (`Rail_Product_Type_id`),
+  CONSTRAINT `Rail_Product_Type_id_refs_id_7a654ce4` FOREIGN KEY (`Rail_Product_Type_id`) REFERENCES `rail_product_type` (`id`),
+  CONSTRAINT `Rail_Product_Group_id_refs_id_b4d6406e` FOREIGN KEY (`Rail_Product_Group_id`) REFERENCES `rail_product_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_product_group_product_type_r`
+--
+
+LOCK TABLES `rail_product_group_product_type_r` WRITE;
+/*!40000 ALTER TABLE `rail_product_group_product_type_r` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_product_group_product_type_r` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_product_product_setup_r`
+--
+
+DROP TABLE IF EXISTS `rail_product_product_setup_r`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_product_product_setup_r` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Rail_Product_id` int(11) NOT NULL,
+  `Rail_Product_Setup_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_product_product_setup_r_6d2ce3bd` (`Rail_Product_id`),
+  KEY `rail_product_product_setup_r_c4f9e5d9` (`Rail_Product_Setup_id`),
+  CONSTRAINT `Rail_Product_id_refs_id_32112c32` FOREIGN KEY (`Rail_Product_id`) REFERENCES `rail_product` (`id`),
+  CONSTRAINT `Rail_Product_Setup_id_refs_id_7790587f` FOREIGN KEY (`Rail_Product_Setup_id`) REFERENCES `rail_product_setup` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_product_product_setup_r`
+--
+
+LOCK TABLES `rail_product_product_setup_r` WRITE;
+/*!40000 ALTER TABLE `rail_product_product_setup_r` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_product_product_setup_r` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_product_setup`
+--
+
+DROP TABLE IF EXISTS `rail_product_setup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_product_setup` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `Description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_product_setup`
+--
+
+LOCK TABLES `rail_product_setup` WRITE;
+/*!40000 ALTER TABLE `rail_product_setup` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_product_setup` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_product_setup_product_setup_value_r`
+--
+
+DROP TABLE IF EXISTS `rail_product_setup_product_setup_value_r`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_product_setup_product_setup_value_r` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Rail_Product_Setup_id` int(11) NOT NULL,
+  `Rail_Product_Setup_Value_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_product_setup_product_setup_value_r_c4f9e5d9` (`Rail_Product_Setup_id`),
+  KEY `rail_product_setup_product_setup_value_r_fbee1d94` (`Rail_Product_Setup_Value_id`),
+  CONSTRAINT `Rail_Product_Setup_Value_id_refs_id_e73e7d09` FOREIGN KEY (`Rail_Product_Setup_Value_id`) REFERENCES `rail_product_setup_value` (`id`),
+  CONSTRAINT `Rail_Product_Setup_id_refs_id_bf29a0c4` FOREIGN KEY (`Rail_Product_Setup_id`) REFERENCES `rail_product_setup` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_product_setup_product_setup_value_r`
+--
+
+LOCK TABLES `rail_product_setup_product_setup_value_r` WRITE;
+/*!40000 ALTER TABLE `rail_product_setup_product_setup_value_r` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_product_setup_product_setup_value_r` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_product_setup_value`
+--
+
+DROP TABLE IF EXISTS `rail_product_setup_value`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_product_setup_value` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `Description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_product_setup_value`
+--
+
+LOCK TABLES `rail_product_setup_value` WRITE;
+/*!40000 ALTER TABLE `rail_product_setup_value` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_product_setup_value` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_product_type`
+--
+
+DROP TABLE IF EXISTS `rail_product_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_product_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `Description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_product_type`
+--
+
+LOCK TABLES `rail_product_type` WRITE;
+/*!40000 ALTER TABLE `rail_product_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_product_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_product_type_product_r`
+--
+
+DROP TABLE IF EXISTS `rail_product_type_product_r`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_product_type_product_r` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Rail_Product_Type_id` int(11) NOT NULL,
+  `Rail_Product_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_product_type_product_r_51053140` (`Rail_Product_Type_id`),
+  KEY `rail_product_type_product_r_6d2ce3bd` (`Rail_Product_id`),
+  CONSTRAINT `Rail_Product_Type_id_refs_id_f9be4d57` FOREIGN KEY (`Rail_Product_Type_id`) REFERENCES `rail_product_type` (`id`),
+  CONSTRAINT `Rail_Product_id_refs_id_22681fa5` FOREIGN KEY (`Rail_Product_id`) REFERENCES `rail_product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_product_type_product_r`
+--
+
+LOCK TABLES `rail_product_type_product_r` WRITE;
+/*!40000 ALTER TABLE `rail_product_type_product_r` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_product_type_product_r` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_project_in_charge`
+--
+
+DROP TABLE IF EXISTS `rail_project_in_charge`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_project_in_charge` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Description` varchar(300) NOT NULL,
+  `Employee_id` int(11) NOT NULL,
+  `Rail_Department_id` int(11) NOT NULL,
+  `Rail_OEM_Project_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_project_in_charge_700cea4e` (`Employee_id`),
+  KEY `rail_project_in_charge_d964e871` (`Rail_Department_id`),
+  KEY `rail_project_in_charge_d901f645` (`Rail_OEM_Project_id`),
+  CONSTRAINT `Employee_id_refs_id_7b6ee882` FOREIGN KEY (`Employee_id`) REFERENCES `employee` (`id`),
+  CONSTRAINT `Rail_Department_id_refs_id_90008095` FOREIGN KEY (`Rail_Department_id`) REFERENCES `rail_department` (`id`),
+  CONSTRAINT `Rail_OEM_Project_id_refs_id_51c18c92` FOREIGN KEY (`Rail_OEM_Project_id`) REFERENCES `rail_oem_project` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_project_in_charge`
+--
+
+LOCK TABLES `rail_project_in_charge` WRITE;
+/*!40000 ALTER TABLE `rail_project_in_charge` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_project_in_charge` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_tracking`
+--
+
+DROP TABLE IF EXISTS `rail_tracking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_tracking` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `OEM_Bidding` date DEFAULT NULL,
+  `Voith_Bidding` date DEFAULT NULL,
+  `LOI` date DEFAULT NULL,
+  `LOI_Kick_off` date DEFAULT NULL,
+  `TA` date DEFAULT NULL,
+  `TA_Kick_off` date DEFAULT NULL,
+  `Contract_Sign` date DEFAULT NULL,
+  `Contract_Kick_off` date DEFAULT NULL,
+  `FAI` date DEFAULT NULL,
+  `First_Delivery` date DEFAULT NULL,
+  `Last_Delivery` date DEFAULT NULL,
+  `Comments` varchar(500) DEFAULT NULL,
+  `Tracking_Flag` tinyint(1) NOT NULL,
+  `Rail_Bidding_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_tracking_04dba7c7` (`Rail_Bidding_id`),
+  CONSTRAINT `Rail_Bidding_id_refs_id_3d22200c` FOREIGN KEY (`Rail_Bidding_id`) REFERENCES `rail_bidding` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_tracking`
+--
+
+LOCK TABLES `rail_tracking` WRITE;
+/*!40000 ALTER TABLE `rail_tracking` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_tracking` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_type`
+--
+
+DROP TABLE IF EXISTS `rail_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(20) NOT NULL,
+  `Description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_type`
+--
+
+LOCK TABLES `rail_type` WRITE;
+/*!40000 ALTER TABLE `rail_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_vehicle_info`
+--
+
+DROP TABLE IF EXISTS `rail_vehicle_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_vehicle_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Description` longtext,
+  `Car_per_TS` decimal(2,0) NOT NULL,
+  `MCar_per_TS` decimal(2,0) DEFAULT NULL,
+  `Speed_From` decimal(5,2) DEFAULT NULL,
+  `Speed_To` decimal(5,2) DEFAULT NULL,
+  `Vehicle_Price` double DEFAULT NULL,
+  `TS_Config` varchar(100) DEFAULT NULL,
+  `Rail_Platform_id` int(11) NOT NULL,
+  `Currency_id` int(11) DEFAULT NULL,
+  `Rail_Class_id` int(11) NOT NULL,
+  `Rail_Vehicle_Project_id` int(11) DEFAULT NULL,
+  `Rail_Type_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_vehicle_info_4b54e609` (`Rail_Platform_id`),
+  KEY `rail_vehicle_info_e1d59b04` (`Currency_id`),
+  KEY `rail_vehicle_info_13e1a675` (`Rail_Class_id`),
+  KEY `rail_vehicle_info_019cfb96` (`Rail_Vehicle_Project_id`),
+  KEY `rail_vehicle_info_b3e2a55d` (`Rail_Type_id`),
+  CONSTRAINT `Rail_Class_id_refs_id_8bfc40da` FOREIGN KEY (`Rail_Class_id`) REFERENCES `rail_class` (`id`),
+  CONSTRAINT `Currency_id_refs_id_9b2dc04b` FOREIGN KEY (`Currency_id`) REFERENCES `currency` (`id`),
+  CONSTRAINT `Rail_Platform_id_refs_id_3a316382` FOREIGN KEY (`Rail_Platform_id`) REFERENCES `rail_platform` (`id`),
+  CONSTRAINT `Rail_Type_id_refs_id_db8f40d7` FOREIGN KEY (`Rail_Type_id`) REFERENCES `rail_type` (`id`),
+  CONSTRAINT `Rail_Vehicle_Project_id_refs_id_7809eadf` FOREIGN KEY (`Rail_Vehicle_Project_id`) REFERENCES `rail_vehicle_project` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_vehicle_info`
+--
+
+LOCK TABLES `rail_vehicle_info` WRITE;
+/*!40000 ALTER TABLE `rail_vehicle_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_vehicle_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rail_vehicle_project`
+--
+
+DROP TABLE IF EXISTS `rail_vehicle_project`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rail_vehicle_project` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Vehicle_project_no` varchar(100) NOT NULL,
+  `Description` longtext,
+  `Line_Length` double DEFAULT NULL,
+  `Created_by` varchar(100) DEFAULT NULL,
+  `Created_date` date DEFAULT NULL,
+  `Last_modified_date` date DEFAULT NULL,
+  `End_User_id` int(11) NOT NULL,
+  `area_id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `region_id` int(11) DEFAULT NULL,
+  `province_id` int(11) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rail_vehicle_project_59dc28b0` (`End_User_id`),
+  KEY `rail_vehicle_project_a4563695` (`area_id`),
+  KEY `rail_vehicle_project_d860be3c` (`country_id`),
+  KEY `rail_vehicle_project_55a4ce96` (`region_id`),
+  KEY `rail_vehicle_project_35b8c010` (`province_id`),
+  KEY `rail_vehicle_project_b376980e` (`city_id`),
+  CONSTRAINT `area_id_refs_id_fd1f2f5e` FOREIGN KEY (`area_id`) REFERENCES `area` (`id`),
+  CONSTRAINT `city_id_refs_id_21d55841` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`),
+  CONSTRAINT `country_id_refs_id_cc3dd3d6` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`),
+  CONSTRAINT `End_User_id_refs_id_f5ed679c` FOREIGN KEY (`End_User_id`) REFERENCES `end_user` (`id`),
+  CONSTRAINT `province_id_refs_id_28931623` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`),
+  CONSTRAINT `region_id_refs_id_a01f393c` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rail_vehicle_project`
+--
+
+LOCK TABLES `rail_vehicle_project` WRITE;
+/*!40000 ALTER TABLE `rail_vehicle_project` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rail_vehicle_project` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `region`
+--
+
+DROP TABLE IF EXISTS `region`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `region` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `region`
+--
+
+LOCK TABLES `region` WRITE;
+/*!40000 ALTER TABLE `region` DISABLE KEYS */;
+/*!40000 ALTER TABLE `region` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `region_province`
+--
+
+DROP TABLE IF EXISTS `region_province`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `region_province` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `region_id` int(11) NOT NULL,
+  `province_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `region_province_55a4ce96` (`region_id`),
+  KEY `region_province_35b8c010` (`province_id`),
+  CONSTRAINT `province_id_refs_id_13c3348e` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`),
+  CONSTRAINT `region_id_refs_id_bde2de60` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `region_province`
+--
+
+LOCK TABLES `region_province` WRITE;
+/*!40000 ALTER TABLE `region_province` DISABLE KEYS */;
+/*!40000 ALTER TABLE `region_province` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-12-12 11:46:22

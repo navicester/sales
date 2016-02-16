@@ -1,0 +1,27 @@
+{% load i18n admin_static admin_modify %}
+
+{% if form.id.value == None or form.id.value == '' %}
+    {% if LinkFormAdminFormset.link_m2m == False %}
+        <a id="add_id_{{ LinkFormAdminFormset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}-id" 
+            class="add-another gifCenter" 
+            onclick="return showAddAnotherPopup(this);" 
+            href="/index/Rail/{{LinkFormAdminFormset.formset.form.Meta.class_name|lower}}/add/">
+            <img width="10" height="10" alt="Add Another" src="{% static "admin/img/icon_addlink.gif" %}">
+        </a> 
+    {% else %}
+        <a id="lookup_id_{{ LinkFormAdminFormset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}-id" 
+            class="related-lookup gifCenter" 
+            onclick="return showRelatedObjectLookupPopup(this);" 
+            href="/index/Rail/{{LinkFormAdminFormset.formset.form.Meta.class_name|lower}}/?t=id">
+            <img width="16" height="16" alt="Add Another" src="{% static "admin/img/selector-search.gif" %}">
+        </a> 
+    
+    {% endif %}
+{% else %}
+    <a id="add_id_{{ LinkFormAdminFormset.formset.prefix }}-{% if not forloop.last %}{{ forloop.counter0 }}{% else %}empty{% endif %}-id" 
+        class="add-another gifCenter" 
+        onclick="return showAddAnotherPopup(this);" 
+        href="/index/Rail/{{LinkFormAdminFormset.formset.form.Meta.class_name|lower}}/{{form.id.value}}/">
+        <img width="10" height="10" alt="Add Another" src="{% static "admin/img/icon_changelink.gif" %}">
+    </a> 
+{% endif %}

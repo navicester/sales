@@ -1,0 +1,138 @@
+
+/*HEAD line*/
+
+#content-main {
+    float: left;
+    width: 150%;
+	border : 1px;
+	height : 1000px;
+	color : #ff0000;
+	border-style: solid;
+	margin: 0px;
+}
+
+#headline{
+    position: relative;
+}
+
+#headline #save{
+    position: absolute;
+    left:75%;
+    width : 6%;
+}
+
+#headline #delete{
+    position: absolute;
+    left : 82%;
+    width : 6%;
+}
+
+#headline #close{
+    position: absolute;
+    left : 89%;
+    width : 6%;
+}
+
+/* project information*/
+#oem-project-info{
+	margin : 5px;
+	position: relative;
+	top : 20px;
+	border: 1px solid;
+	height : 200px;
+}
+
+.div-stype{
+	border : 1px solid;
+	margin : 1px;	
+}
+
+.text-right{
+	align : right;
+}
+
+#oem-project-info #top{
+	height : 60%;
+	position: relative;
+}
+
+#oem-project-info #top #left-top{
+	height : 100%;
+	width : 50%;	
+	color : #ff0000;
+	margin; 5px;
+}
+
+#oem-project-info #top #right-top{
+	position: absolute;
+	width : 50%;
+    height : 100%;
+	left : 50%;
+	top : 0%;
+	color : #00ff00;
+}
+
+#oem-project-info #bottom{
+	position: absolute;
+	height : 40%;
+	width : 100%;
+	top: 60%;	
+	color : #123456;
+	//padding : 5px;
+}
+
+#tb{
+	color : #0000ff;
+	//border : 1px solid;
+	position: absolute;
+	top : 0;
+	left : 0;
+}
+
+#addrailproject{
+	color : #0000ff;
+	position: relative;
+	top : 20px;
+	left : 85%;
+}
+
+#railprojectlist{
+	color : #0000ff;
+	position: relative;
+	top : 20px;
+	left : 0px;
+	height : 100px;
+	overflow: scroll;
+}
+
+#other-information{
+	color : #0000ff;
+	border:1px solid;
+	position: relative;
+	top : 20px;
+	left : 0px;
+	height:100px;
+}
+
+#tb2{
+	color : #0000ff;
+	//border : 1px solid;
+	position: absolute;
+	top : 0;
+	left : 50%;
+}
+
+#tb4{
+	color : #0000ff;
+	border : 1px solid;
+}
+
+#desc{
+	height : 50px;
+}
+
+/* fieldsets*/
+.field-Description{
+    left : 100px;
+    color :#ff000000;
+}

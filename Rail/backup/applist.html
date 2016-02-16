@@ -1,0 +1,25 @@
+
+{% load i18n admin_static %}
+
+{% ifequal app.name "Rail" %}
+<div class = 'groupmodule'>
+    <table>
+    <caption>
+        <a href="{{ app.app_url }}" 
+           class="section" 
+           title="{% blocktrans with name=app.name %}Models in the {{ name }} application{% endblocktrans %}">
+            {% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}
+        </a>
+    </caption>
+    <tr>
+        <th>Product</th>
+    </tr>
+    <tr>
+        <th">Location</th>
+    </tr>
+    <tr>
+        <th">Class</th>
+    </tr>        
+    </caption>
+</div>
+{% endifequal  %}

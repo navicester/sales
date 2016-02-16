@@ -1,0 +1,160 @@
+{% load i18n admin_static admin_modify %}
+{% load admin_urls %}
+{% load admin_modify_extend %}
+
+<script type="text/javascript">
+
+function toggle_status() {
+    if($("#id_Sales_Commission_Flag").is(":checked") == true){
+        $("#id_Percentage_Down_Payment").prop('disabled', true);
+        $("#id_Total_Value_DP_exclude_VAT").prop('disabled', true);
+        $("#id_Total_Value_exclude_VAT").prop('disabled', true);
+        $("#id_Advance_Payment_Bond_Percentage").prop('disabled', true);
+        $("#id_Quality_Bond_Percentage").prop('disabled', true);
+        $("#id_Contract_Training_Flag").prop('disabled', true);        
+    }
+    else{
+        $("#id_Percentage_Down_Payment").prop('disabled', false);
+        $("#id_Total_Value_DP_exclude_VAT").prop('disabled', false);
+        $("#id_Total_Value_exclude_VAT").prop('disabled', false);
+        $("#id_Advance_Payment_Bond_Percentage").prop('disabled', false);
+        $("#id_Quality_Bond_Percentage").prop('disabled', false);
+        $("#id_Contract_Training_Flag").prop('disabled', false);        
+    }
+}
+
+function get_ts_qty(){
+    var parent = window.parent.opener;
+    //alert(parent);
+    var ts_qty = parent.document.getElementById("id_ts_qty");
+    //alert(ts_qty);
+    //alert(ts_qty.value);
+    if(ts_qty){
+        return ts_qty.value;
+    }
+    return 0;
+    //ts_qty = $("#id_ts_qty").val();
+}
+
+function update_total_price(){
+    var total_price = 0;
+    var max_line = $("#id_product_lists_set-MAX_NUM_FORMS").val();
+
+    for(i=0;i<max_line;i++){
+            var quantity = $("#id_product_lists_set-" + i + "-Quantity");
+            var price = $("#id_product_lists_set-" + i + "-Based_Price_exclude_VAT");
+            if(quantity.length > 0 && price.length > 0){
+                total_price += quantity.val() * price.val();
+            }
+    }
+    total_price *= get_ts_qty();
+    $("input#id_Total_Bidding_Price_exclude_VAT").val(total_price);
+}
+
+$(document).ready(function() {
+    {% ifequal is_add_new "True" %}
+        $("input#id_Created_by").val("{{user.username}}");
+        $("input#id_Created_date_0").val("{{CreateDate}}");
+        $("input#id_Created_date_1").val("{{CreateTime}}");        
+    {% endifequal%}
+    
+    {% ifequal opts.object_name.lower "rail_bidding" %}
+        $("#tabs").tabs();
+        adjust_stackInline_fieldset();
+        adjust_tabularInline_filedset("rail_bidding");
+        
+        var array_td = ["2%", "33%", "10%", "10%", "10%", "10%", "10%", "10%"];
+        adjust_link_formset("div#product_lists_set-group>div>fieldset>table", array_td);    
+        
+        var array_td = ["2%", "28%", "30%", "35%"]; //%
+        adjust_link_formset("div#rail_tracking_set-group>div>fieldset>table", array_td);
+        
+        var array_td = ["2%", "13%", "10%", "50%", "10%", "10%"]; //%
+        adjust_link_formset("div#rail_competitor_bidding_set-group>div>fieldset>table", array_td);
+
+        $(".tabular .field-id input").css("width","65%");
+
+    {% endifequal%}
+
+    {% ifequal opts.object_name.lower "rail_configuration" %}
+    {% endifequal%}
+
+    {% ifequal opts.object_name.lower "rail_contract" %}
+        adjust_tabularInline_filedset("rail_contract");
+
+    	$("#id_Sales_Commission_Flag").click(toggle_status);
+
+        toggle_status();
+    
+    {% endifequal%}
+
+    {% ifequal opts.object_name.lower "rail_oem_project" %}
+        $("#tabs").tabs();
+
+        adjust_stackInline_fieldset();
+
+        adjust_tabularInline_filedset("rail_oem_project");
+
+        var array_td = ["2%", "28%", "30%", "35%"]; //%
+        adjust_link_formset("div#rail_project_in_charge_set-group>div>fieldset>table", array_td);
+
+        var array_td = ["2%", "15%", "40%", "20%", "18%"]; //%
+        adjust_link_formset("div#rail_customer_bidding_set-group>div>fieldset>table", array_td);
+
+
+        var array_td = ["2%", "13%", "20%", "20%", "10%", "20%"]; //%
+        adjust_link_formset("div#rail_bidding_set-group>div>fieldset>table", array_td);
+
+        $(".tabular .field-id input").css("width","60%");    
+        
+        $(document).on("change","input#id_ts_qty",function(){
+            //get_ts_qty()
+        });
+
+    {% endifequal%}
+
+    {% ifequal opts.module_name "rail_bidding" %}
+    
+        $("#tabs").tabs();
+         
+        adjust_stackInline_fieldset();
+        
+        adjust_tabularInline_filedset("rail_bidding");
+        
+        var array_td = ["2%", "33%", "10%", "10%", "10%", "10%", "10%", "10%"];
+        adjust_link_formset("div#product_lists_set-group>div>fieldset>table", array_td);    
+        
+        var array_td = ["2%", "28%", "30%", "35%"]; //%
+        adjust_link_formset("div#rail_tracking_set-group>div>fieldset>table", array_td);
+        
+        var array_td = ["2%", "13%", "10%", "50%", "10%", "10%"]; //%
+        adjust_link_formset("div#rail_competitor_bidding_set-group>div>fieldset>table", array_td);
+        
+        $(".tabular .field-id input").css("width","60%");  
+        
+        $(document).on("change","td.field-Quantity>input",function(){
+            update_total_price()
+        });
+        
+        $(document).on("change","td.field-Based_Price_exclude_VAT>input",function(){
+            update_total_price()
+        });
+        
+    {% endifequal%}
+
+    {% ifequal opts.object_name.lower "rail_vehicle_project" %}
+        $("#tabs").tabs();
+
+        adjust_stackInline_fieldset();
+            
+        adjust_tabularInline_filedset("rail_vehicle_project");
+
+        var array_td = ["2%", "12%", "15%", "55%", "10%", "10%"]; //%
+        adjust_link_formset("div#rail_oem_project_set-group>div>fieldset>table", array_td);
+        $(".tabular .field-id input").css("width","65%");
+    
+    {% endifequal%}
+
+
+});
+</script>

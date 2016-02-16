@@ -1,0 +1,116 @@
+{% load i18n admin_static %}
+<script type="text/javascript" src="{% static "admin/js/jquery-ui.js" %}"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    
+    adjust_stackInline_fieldset();
+        
+    adjust_tabularInline_filedset("rail_vehicle_project");
+
+    var array_td = ["2%", "12%", "15%", "55%", "10%", "10%"]; //%
+    adjust_link_formset("div#rail_oem_project-group>div>fieldset>table", array_td);
+    adjust_link_formset("div#rail_oem_project_set-group>div>fieldset>table", array_td);
+    $(".tabular .field-id input").css("width","65%");
+
+    var area_country_arrays_parent_value = [];
+    var area_country_arrays_id = [];
+    var area_country_arrays_value = []; 
+    var area_country_init_son_value;
+
+    var country_region_arrays_parent_value = [];
+    var country_region_arrays_id = [];
+    var country_region_arrays_value = []; 
+    var country_region_init_son_value;
+    
+    var region_province_arrays_parent_value = [];
+    var region_province_arrays_id = [];
+    var region_province_arrays_value = []; 
+    var region_province_init_son_value;
+    
+    var province_city_arrays_parent_value = [];
+    var province_city_arrays_id = [];
+    var province_city_arrays_value = []; 
+    var province_city_init_son_value;
+    
+
+    {% for ay in area_countrys %}
+        area_country_arrays_parent_value.push("{{ay.area}}");
+        area_country_arrays_id.push("{{ay.country.id}}");
+        area_country_arrays_value.push("{{ay.country}}");
+    {% endfor %}
+    area_country_init_son_value = "{{cur_country}}";
+
+    {% for ay in country_regions %}
+        country_region_arrays_parent_value.push("{{ay.country}}");
+        country_region_arrays_id.push("{{ay.region.id}}");
+        country_region_arrays_value.push("{{ay.region}}");            
+    {% endfor %}
+    country_region_init_son_value = "{{cur_region}}";
+
+    {% for ay in region_provinces %}
+        region_province_arrays_parent_value.push("{{ay.region}}");
+        region_province_arrays_id.push("{{ay.province.id}}");
+        region_province_arrays_value.push("{{ay.province}}");            
+    {% endfor %}
+    region_province_init_son_value = "{{cur_province}}";        
+
+    {% for ay in province_citys %}
+        province_city_arrays_parent_value.push("{{ay.province}}");
+        province_city_arrays_id.push("{{ay.city.id}}");
+        province_city_arrays_value.push("{{ay.city}}");            
+    {% endfor %}
+    province_city_init_son_value = "{{cur_city}}";
+
+    $("#id_area").change(function(){update_relation('id_area','id_country', area_country_init_son_value, area_country_arrays_parent_value, area_country_arrays_id, area_country_arrays_value )});
+    $("#id_country").change(function(){update_relation('id_country','id_region', country_region_init_son_value, country_region_arrays_parent_value, country_region_arrays_id, country_region_arrays_value)});
+    $("#id_region").change(function(){update_relation('id_region','id_province', region_province_init_son_value,region_province_arrays_parent_value,region_province_arrays_id, region_province_arrays_value )});
+    $("#id_province").change(function(){update_relation('id_province','id_city', province_city_init_son_value, province_city_arrays_parent_value, province_city_arrays_id, province_city_arrays_value)});
+
+    $("#id_area").change();    
+
+
+    var rail_class_type_arrays_parent_value = [];
+    var rail_class_type_arrays_id = [];
+    var rail_class_type_arrays_value = [];     
+
+    var rail_class_platform_arrays_parent_value = [];
+    var rail_class_platform_arrays_id = [];
+    var rail_class_platform_arrays_value = [];     
+
+    {% for ay in rail_class_types %}
+        //var m = "{{ay.Rail_Class|escapejs}}";
+        //m=m.replace("\u000D\u000A",'\n');
+        rail_class_type_arrays_parent_value.push("{{ay.Rail_Class}}");
+        rail_class_type_arrays_id.push("{{ay.Rail_Type.id}}");
+        rail_class_type_arrays_value.push("{{ay.Rail_Type}}");
+    {% endfor %}
+
+    {% for ay in rail_class_platforms %}
+        rail_class_platform_arrays_parent_value.push("{{ay.Rail_Class}}");
+        rail_class_platform_arrays_id.push("{{ay.Rail_Platform.id}}");
+        rail_class_platform_arrays_value.push("{{ay.Rail_Platform}}");
+    {% endfor %}
+
+    var init_son_value = '';
+    $(document).on("change","div.field-Rail_Class>div>select",function(){    
+//    $("div.field-Rail_Class>div>select").bind("change",function(){        
+        var cur_id = this.id;
+        var to_id = cur_id;
+        to_id = to_id.replace("-Rail_Class","-Rail_Type");
+        update_relation(cur_id,to_id,init_son_value,rail_class_type_arrays_parent_value,rail_class_type_arrays_id,rail_class_type_arrays_value)
+
+        to_id = cur_id;
+        to_id = to_id.replace("-Rail_Class","-Rail_Platform");
+        update_relation(cur_id,to_id,init_son_value,rail_class_platform_arrays_parent_value,rail_class_platform_arrays_id,rail_class_platform_arrays_value)
+
+    });
+
+    $("div.field-Rail_Class>div>select").change();
+
+});
+
+
+</script>            
+
